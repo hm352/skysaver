@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Form </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container" id="form">
+		<form>
+			<div class="row">
+			  <div class="col">
+			    <input type="text" class="form-control" placeholder="From">
+			  </div>
+			  <div class="col">
+			    <input type="text" class="form-control" placeholder="To"> 
+			  </div>
+			</div>
+			<div class="row">
+				<div class="col">
+				 <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/ placeholder="Outbound Date">
+                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>	
+				 </div>
+				</div>
+				<div class="col">
+				 <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2"/ placeholder="Return Date">
+                    <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>	
+				 </div>
+				</div>
+			</div>
+		</div>
+			<div class="row">
+			  <div class="col text-center">
+			    <button class="btn btn-outline-primary" type="submit"> Get Flights </button>
+			  </div>
+			</div>
+		</form>
+	</div>
+</body>
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker();
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker2').datetimepicker();
+    });
+</script>
+</html>

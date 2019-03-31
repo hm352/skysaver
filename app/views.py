@@ -4,7 +4,7 @@ from django.views.generic import View
 
 class form(View):
     def get(self, request, *args, **kwargs):
-        return HttpResponse("this is a form page")
+        return render(request, "app/form.html")
     
     def post(self, request, *args, **kwargs):
         return redirect("/results")
