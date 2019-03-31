@@ -1,6 +1,7 @@
 from django.urls import path, include
-from . import views
+from .views import form, results
 
 urlpatterns = [
-    path('', views.results, name="results"),        
+    path('results', results, name="results"),
+    path('', form.as_view()),
 ]
