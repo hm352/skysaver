@@ -32,7 +32,8 @@ def create_session():
     return sessionkey
 
 
-def travel_options(sessionkey=create_session()):
+def travel_options():
+    sessionkey = create_session()
     headers = {
         "X-RapidAPI-Host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
         "X-RapidAPI-Key": "d6a92afd29msh6816f4510a93926p15a997jsncef016cde055",
