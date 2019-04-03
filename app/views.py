@@ -1,14 +1,21 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.views.generic import View
+from .travel import travel_options
 
-class form(View):
-    def get(self, request, *args, **kwargs):
+
+def form(request):
+    if request.method == "GET":
         return render(request, "app/form.html")
-    
-    def post(self, request, *args, **kwargs):
-        return redirect("/results")
-        
+
 
 def results(request):
-    return HttpResponse("hello")
+    if request.method == "GET":
+        return redirect("/")
+
+    else:
+        content = travel_options()
+        itineraries = content["Itineraries"]
+        return render(
+            request,
+            "app/results.html",
+            context={"itineraries": itineraries}
+        )
