@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Results </title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col"> Stops </th>
+      <th scope="col"> Emissions </th>
+      <th scope="col"> Price </th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for itinerary in itineraries %}
+        <tr>
+          	<td> something </td>
+          	<td>to do</td>
+          	{% for item in itinerary.PricingOptions %}
+          	<td>{{ item.Price }}</td>
+          	{% endfor %}
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</body>
+</html>
