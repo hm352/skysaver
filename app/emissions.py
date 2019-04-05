@@ -24,7 +24,7 @@ def count_stops(leg):
     return len(stops)
 
 
-def route_finder(leg):
+def route_finder(leg, places):
     stops = leg["Stops"]
     origin = leg["OriginStation"]
     destination = leg["DestinationStation"]
@@ -33,18 +33,35 @@ def route_finder(leg):
     route = []
     for i, _ in enumerate(stops):
         if i > 0:
-            node = [stops[i - 1], stops[i]]
+            from_ = IATA_mapping(stops[i - 1], places)
+            to = IATA_mapping(stops[i], places)
+            node = [from_, to]
             route.append(node)
     return route
 
 
-def emmissions(origin, destination):
+def IATA_mapping(code, places):
+    for place in places:
+        if place["Id"] == code:
+            return place["Code"]
+
+
+def route_emissions(route):
+    total_emissions = 0
+    for node in route:
+        total_emissions += emissions(node[0], node[1])
+    return total_emissions
+
+
+def emissions(origin, destination, seat_class="economy"):
     url = "http://impact.brighterplanet.com/flights.json"
     params = {
-        "origin_airport": f"{orgin}",
+        "origin_airport": f"{origin}",
         "destination_airport": f"{destination}",
-        "trip": 1
+        "trips": 1,
+        "seat_class": seat_class
     }
     response = requests.post(url, params=params)
     emmissions = json.loads(response.text)
     carbon = emmissions["decisions"]["carbon"]["object"]["value"]
+    return carbon

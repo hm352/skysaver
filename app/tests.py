@@ -1,10 +1,13 @@
 from django.test import TestCase
+from django.core.cache import cache
+from django.conf import settings
 import json
-from .emmissions import (
+from .emissions import (
     count_stops,
-    get_inbound_leg,
     get_outbound_leg,
-    route_finder
+    route_finder,
+    IATA_mapping,
+    route_emissions
 )
 
 
@@ -34,7 +37,23 @@ class test_emissions(TestCase):
 
     def test_route_finder(self):
         itinerary = itineraries[0]
-        expected = [[16216, 18563], [18563, 13554]]
+        expected = [['SFO', 'ZRH'], ['ZRH', 'LHR']]
         leg = get_outbound_leg(itinerary, legs)
-        route = route_finder(leg)
+        route = route_finder(leg, places)
         self.assertEqual(route, expected)
+        emissions = route_emissions(route)
+        print(emissions)
+        assert False
+
+    def test_airport_name_mapping(self):
+        expected = "LIS"
+        code = 4609
+        airport = IATA_mapping(code, places)
+        self.assertEqual(airport, expected)
+
+    # def test_emissions(self):
+    #     itinerary = itineraries[0]
+    #     leg = get_outbound_leg(itinerary, legs)
+    #     route = route_finder(leg, places)
+    #     carbon = route_emissions(route)
+    #     assert False
