@@ -42,18 +42,10 @@ class test_emissions(TestCase):
         route = route_finder(leg, places)
         self.assertEqual(route, expected)
         emissions = route_emissions(route)
-        print(emissions)
-        assert False
+        assert emissions < 2500
 
     def test_airport_name_mapping(self):
         expected = "LIS"
         code = 4609
         airport = IATA_mapping(code, places)
         self.assertEqual(airport, expected)
-
-    # def test_emissions(self):
-    #     itinerary = itineraries[0]
-    #     leg = get_outbound_leg(itinerary, legs)
-    #     route = route_finder(leg, places)
-    #     carbon = route_emissions(route)
-    #     assert False

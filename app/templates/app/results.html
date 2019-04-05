@@ -16,11 +16,9 @@
   <tbody>
   	{% for itinerary in itineraries %}
         <tr>
-          	<td> something </td>
-          	<td>to do</td>
-          	{% for item in itinerary.PricingOptions %}
-          	<td>{{ item.Price }}</td>
-          	{% endfor %}
+          	<td> {{ itinerary.Connections }} </td>
+          	<td>{{ itinerary.Emissions }}</td>
+          	<td>{{ itinerary.Price }}</td>
         </tr>
     {% endfor %}
   </tbody>
