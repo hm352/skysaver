@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title> Results </title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-</head>
-<body>
+{% endtends 'base.html' %}
+{% block content %}
 <table class="table">
   <thead>
     <tr>
       <th scope="col"> Stops </th>
       <th scope="col"> Emissions </th>
       <th scope="col"> Price </th>
+      <th scope="col"> Date </th>
     </tr>
   </thead>
   <tbody>
@@ -19,9 +15,9 @@
           	<td> {{ itinerary.Connections }} </td>
           	<td>{{ itinerary.Emissions }}</td>
           	<td>{{ itinerary.Price }}</td>
+            <td>{{ itinerary.Departure }}</td>
         </tr>
     {% endfor %}
   </tbody>
 </table>
-</body>
-</html>
+{% endblock %}

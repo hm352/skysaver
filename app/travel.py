@@ -3,7 +3,7 @@ import json
 from time import sleep
 
 
-def create_session():
+def create_session(outbound, inbound):
     url = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/v1.0"
 
     headers = {
@@ -13,7 +13,7 @@ def create_session():
     }
 
     data = {
-        "inboundDate": "2019-05-10",
+        "inboundDate": inbound,
         "cabinClass": "business",
         "children": 0,
         "infants": 0,
@@ -22,7 +22,7 @@ def create_session():
         "locale": "en-US",
         "originPlace": "SFO-sky",
         "destinationPlace": "LHR-sky",
-        "outboundDate": "2019-05-01",
+        "outboundDate": outbound,
         "adults": 1
     }
 
@@ -32,8 +32,8 @@ def create_session():
     return sessionkey
 
 
-def travel_options():
-    sessionkey = create_session()
+def travel_options(outbound, inbound):
+    sessionkey = create_session(outbound, inbound)
     headers = {
         "X-RapidAPI-Host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
         "X-RapidAPI-Key": "d6a92afd29msh6816f4510a93926p15a997jsncef016cde055",

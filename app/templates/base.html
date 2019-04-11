@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<style type="text/css">
+	.navbar-collapse li a{
+		color: white
+	}
+</style>
+<body>
+  <nav class="navbar navbar-light" style="background-color:#009933;
+  		">
+  	  <div class="navbar-collapse">
+  	    <ul class="nav-bar nav mr auto">
+	  	  <li class="nav-item active">
+	        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="#">Features</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="#">Pricing</a>
+	      </li>
+        </ul>
+      </div>
+  </nav>
+	<div class="col">
+		{% block content %}
+		{% endblock %}
+	</div>
+</body>
+</html>

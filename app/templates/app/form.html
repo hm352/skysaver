@@ -1,62 +1,61 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title> Form </title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-</head>
-<body>
-	<div class="container" id="form">
-		<form action="/results" method="post">{% csrf_token %}
-			<div class="row">
-			  <div class="col">
-			    <input type="text" class="form-control" placeholder="From">
-			  </div>
-			  <div class="col">
-			    <input type="text" class="form-control" placeholder="To"> 
-			  </div>
-			</div>
-			<br>
-			<div class="row">
-				<div class="col">
-				 <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/ placeholder="Outbound Date">
-                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                    </div>
-                 </div>
-                 </div>	
-				<div class="col">
-				 <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2"/ placeholder="Return Date">
-                    <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                    </div>	
-				 </div>
+{% extends 'base.html' %}
+{% block content %}
+ <head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+ 		 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+ </head>
+ {% load crispy_forms_tags %}
+	 <form method="post" action="/results">
+	    <div class="col">
+	    	<div class="row">
+    			{% csrf_token %}
+	   			<div class="col">
+	   			{{ form.from_ | as_crispy_field }}
+	   			</div>
+	   			<div class="col">
+	   			{{ form.to | as_crispy_field }}
+	    		</div>
+	    	</div>
+	        <div class="row">
+	   			<div class='col'>
+					<div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+					  	{{ form.outbound | as_crispy_field }}
+					  <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+				    	<div class="input-group-text"><i class="fa fa-calendar"></i>
+				    	</div>
+					  </div>
+					</div>
 				</div>
-			</div>
-		</div>
-		<br>
-			<div class="row">
-			  <div class="col text-center">
-			    <button class="btn btn-outline-primary" type="submit"> Get Flights </button>
-			  </div>
-			</div>
-		</form>
-	</div>
-</body>
-<script type="text/javascript">
-    $(function () {
-        $('#datetimepicker1').datetimepicker();
-    });
-</script>
-<script type="text/javascript">
-    $(function () {
-        $('#datetimepicker2').datetimepicker();
-    });
-</script>
-</html>
+	   			<div class='col'>
+					<div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+					  	{{ form.inbound | as_crispy_field }}
+					  <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+				    	<div class="input-group-text" style=""><i class="fa fa-calendar"></i>
+				    	</div>
+					  </div>
+					</div>
+				</div>
+	    	</div>    
+		    <div class="col text-center">
+		    	<button class="btn btn-success"type="submit">Get Flights</button>
+		    </div>
+	    </div>
+	 </form>
+     <script>
+	  $(function () {
+	    $("#datetimepicker1").datetimepicker({
+	    	format: 'DD-MM-YYYY',
+	    });
+	  });
+	</script>
+	<script>
+	  $(function () {
+	    $("#datetimepicker2").datetimepicker({
+	    	format: 'DD-MM-YYYY',
+	    });
+	  });
+	</script>
+{% endblock %}
