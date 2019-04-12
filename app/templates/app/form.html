@@ -5,18 +5,23 @@
  		 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
  </head>
  {% load crispy_forms_tags %}
 	 <form method="post" action="/results">
-	    <div class="col">
+	    <div class="col text-center">
 	    	<div class="row">
     			{% csrf_token %}
 	   			<div class="col">
-	   			{{ form.from_ | as_crispy_field }}
+	   				<div id="div_id_from_" class="form-group">
+	   						<input type="text" name="from_" placeholder="From" class="textinput textInput form-contol" required id="id_from_" onkeydown="getPlaces()">	
+	   				</div>	   			
 	   			</div>
 	   			<div class="col">
-	   			{{ form.to | as_crispy_field }}
+	   				<div id="div_id_to" class="form-group">
+	   						<input type="text" name="to" placeholder="To" class="textinput textInput form-contol" required id="id_to" onkeyup="getPlaces()">	
+	   				</div>
 	    		</div>
 	    	</div>
 	        <div class="row">
@@ -44,6 +49,23 @@
 		    </div>
 	    </div>
 	 </form>
+	 <script type="text/javascript">
+	 	function getPlaces() {
+	 		let element = event.target;
+	 		let query = element.value;
+	 		var xhttp = new XMLHttpRequest();
+	 		xhttp.onreadystatechange = function() {
+	 			if (this.readyState == 4 && this.status == 200){
+	 				alert(this.response);		
+	 			}
+	 		};
+	 		if (query.length >= 2){
+	 			xhttp.open("POST", "/places");
+	 			xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+	 			xhttp.send(query);
+	 		}
+	 	}
+	 </script>
      <script>
 	  $(function () {
 	    $("#datetimepicker1").datetimepicker({

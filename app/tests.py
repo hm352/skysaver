@@ -9,6 +9,7 @@ from .emissions import (
     IATA_mapping,
     route_emissions
 )
+from .travel import get_places
 
 
 def load_data():
@@ -21,6 +22,15 @@ def load_data():
 
 
 itineraries, legs, places = load_data()
+
+
+class test_forms(TestCase):
+    def test_get_places(self):
+        query = "Norway"
+        places = get_places(query)
+        print(places)
+        assert False
+        # assert places
 
 
 class test_emissions(TestCase):

@@ -17,9 +17,9 @@ def create_session(outbound, inbound):
         "cabinClass": "business",
         "children": 0,
         "infants": 0,
-        "country": "US",
-        "currency": "USD",
-        "locale": "en-US",
+        "country": "UK",
+        "currency": "GBP",
+        "locale": "en-GB",
         "originPlace": "SFO-sky",
         "destinationPlace": "LHR-sky",
         "outboundDate": outbound,
@@ -52,3 +52,15 @@ def travel_options(outbound, inbound):
         if status == "UpdatesComplete":
             polling = False
             return content
+
+
+def get_places(query="Stockholm"):
+    url = f"https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/UK/GBP/en-GB/?query={query}"
+    headers = {
+        "X-RapidAPI-Host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
+        "X-RapidAPI-Key": "d6a92afd29msh6816f4510a93926p15a997jsncef016cde055",
+    }
+
+    response = requests.get(url, headers=headers)
+    content = json.loads(response.text)
+    return content

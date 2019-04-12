@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 from .forms import FlightForm
-from .travel import travel_options
+from .travel import travel_options, get_places
 from .emissions import (
     get_inbound_leg,
     get_outbound_leg,
@@ -17,15 +18,24 @@ def form(request):
         return render(request, "app/form.html", {'form': form})
 
 
+@csrf_exempt
+def places(request):
+    query = request.body.decode()
+    places = get_places(query)["Places"]
+    place_list = [place["PlaceName"] for place in places]
+    if not place_list:
+        place_list = ["destination does not exist :("]
+    return HttpResponse(place_list)
+
+
 def results(request):
     if request.method == "GET":
         return redirect("/")
 
     else:
-        outbound = request.POST.get("outbound")
-        inbound = request.POST.get("inbound")
+        # outbound = request.POST.get("outbound")
+        # inbound = request.POST.get("inbound")
 
-        print(request.POST)
         # content = travel_options(outbound, inbound)
 
         # itineraries = content["Itineraries"]
@@ -48,4 +58,4 @@ def results(request):
         #         "itineraries": itineraries
         #     }
         # )
-        return HttpResponse("hello")
+        return redirect("/")
