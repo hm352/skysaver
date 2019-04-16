@@ -33,29 +33,29 @@ def results(request):
         return redirect("/")
 
     else:
-        # outbound = request.POST.get("outbound")
-        # inbound = request.POST.get("inbound")
+        print(request.POST)
+        outbound = request.POST.get("outbound")
+        inbound = request.POST.get("inbound")
 
-        # content = travel_options(outbound, inbound)
+        content = travel_options("2019-04-15", "2019-04-20")
 
-        # itineraries = content["Itineraries"]
-        # legs = content["Legs"]
-        # places = content["Places"]
+        itineraries = content["Itineraries"]
+        legs = content["Legs"]
+        places = content["Places"]
 
-        # for itinerary in itineraries:
-        #     out_leg = get_outbound_leg(itinerary, legs)
-        #     stops = count_stops(out_leg)
-        #     itinerary["Connections"] = stops
-        #     out_route = route_finder(out_leg, places)
-        #     emissions = route_emissions(out_route)
-        #     itinerary["Emissions"] = emissions
-        #     itinerary["Price"] = itinerary["PricingOptions"][0]["Price"]
-        #     itinerary["Departure"] = out_leg["Departure"]
-        # return render(
-        #     request,
-        #     "app/results.html",
-        #     context={
-        #         "itineraries": itineraries
-        #     }
-        # )
-        return redirect("/")
+        for itinerary in itineraries:
+            out_leg = get_outbound_leg(itinerary, legs)
+            stops = count_stops(out_leg)
+            itinerary["Connections"] = stops
+            out_route = route_finder(out_leg, places)
+            emissions = route_emissions(out_route)
+            itinerary["Emissions"] = emissions
+            itinerary["Price"] = itinerary["PricingOptions"][0]["Price"]
+            itinerary["Departure"] = out_leg["Departure"]
+        return render(
+            request,
+            "app/results.html",
+            context={
+                "itineraries": itineraries
+            }
+        )
