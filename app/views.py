@@ -1,3 +1,4 @@
+from time import sleep
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -26,6 +27,18 @@ def places(request):
     if not place_list:
         place_list = ["destination does not exist :("]
     return HttpResponse(place_list)
+
+
+@csrf_exempt
+def test(request):
+    if request.method == "POST":
+        sleep(5)
+        silly_json = {
+            "silly": "billy"
+        }
+        return HttpResponse(silly_json)
+    else:
+        return render(request, "app/test.html")
 
 
 def results(request):

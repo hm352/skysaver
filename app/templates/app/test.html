@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+ <head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+ 		 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+		<link rel = "stylesheet"
+   		type="text/css"
+   		href="{% static 'app/test.css' %}" />
+ </head>
+ <div id="travelForm">
+ 	<button id="button1">here</button>
+ </div>
+ <div id="loader">
+ 	<div class="spinner"></div>
+ </div>
+ <div id="travelInfo">
+ 	<p>Travel info</p>
+ </div>
+ <script type="text/javascript">
+ 	$("#button1").click(function(){
+ 		$.post("/test", function() {
+ 			$("#loader").css("display", "none");
+ 			$("#travelInfo").css("display", "inline");
+ 		})
+ 	});
+ </script>
+ <script type="text/javascript">
+ 	$(document).ajaxStart(function(){
+ 		$("#travelForm").css("display", "none");
+ 		$("#loader").css("display", "inline");
+ 	})
+ </script>
+{% endblock %}
