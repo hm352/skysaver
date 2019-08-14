@@ -1,8 +1,8 @@
 from time import sleep
+import json
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from .forms import FlightForm
 from .travel import travel_options, get_places
 from .emissions import (
     get_inbound_leg,
@@ -33,10 +33,12 @@ def places(request):
 def test(request):
     if request.method == "POST":
         sleep(5)
+        print(request.body)
         silly_json = {
-            "silly": "billy"
+            "silly": "billy",
+            "billy": "silly"
         }
-        return HttpResponse(silly_json)
+        return HttpResponse(json.dumps(silly_json))
     else:
         return render(request, "app/test.html")
 

@@ -12,26 +12,34 @@
    		href="{% static 'app/test.css' %}" />
  </head>
  <div id="travelForm">
- 	<button id="button1">here</button>
+ 	<form action="">
+ 		<input type="text" name="from_" placeholder="From">
+ 		<input type="text" name="to" placeholder="To">
+ 		<input type="submit" value="Submit">
+ 	</form>
  </div>
  <div id="loader">
  	<div class="spinner"></div>
  </div>
- <div id="travelInfo">
- 	<p>Travel info</p>
+ <div  id="travelInfo">
+ 	<p id="travel">Travel info</p>
  </div>
+ <!-- holy fuck this script does everything -->
  <script type="text/javascript">
- 	$("#button1").click(function(){
- 		$.post("/test", function() {
- 			$("#loader").css("display", "none");
+ 	$("form").submit(function(event){
+ 		event.preventDefault();
+ 		var formData = $("form").serializeArray();
+ 		$("#loader").css("display", "inline");
+ 		$("#travelForm").css("display", "none");
+ 		$.post("/test", formData, function(data){
+ 			var json_data = JSON.parse(data);
+ 			var elements = Object.keys(json_data).length;
+ 			for (i = 0 ; i < elements ; i++){
+ 				$("#travel").after("<p> good stuff </p>");
+ 			}
  			$("#travelInfo").css("display", "inline");
+ 			$("#loader").css("display", "none");
  		})
  	});
- </script>
- <script type="text/javascript">
- 	$(document).ajaxStart(function(){
- 		$("#travelForm").css("display", "none");
- 		$("#loader").css("display", "inline");
- 	})
  </script>
 {% endblock %}
