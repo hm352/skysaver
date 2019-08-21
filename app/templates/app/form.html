@@ -1,83 +1,82 @@
 {% extends 'base.html' %}
 {% block content %}
- <head>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
- 		 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	{% load static %}
+	<head>
+		<!-- these can be moved the base.html  -->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
- </head>
- {% load crispy_forms_tags %}
-	 <form method="post" action="/results">
-	    <div class="col text-center">
-	    	<div class="row">
-    			{% csrf_token %}
-	   			<div class="col">
-	   				<div id="div_id_from_" class="form-group">
-	   						<input type="text" name="from_" placeholder="From" class="textinput textInput form-contol" required id="id_from_" onkeydown="getPlaces()">	
-	   				</div>	   			
-	   			</div>
-	   			<div class="col">
-	   				<div id="div_id_to" class="form-group">
-	   						<input type="text" name="to" placeholder="To" class="textinput textInput form-contol" required id="id_to" onkeyup="getPlaces()">	
-	   				</div>
-	    		</div>
-	    	</div>
-	        <div class="row">
-	   			<div class='col'>
-					<div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-					  	{{ form.outbound | as_crispy_field }}
-					  <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-				    	<div class="input-group-text"><i class="fa fa-calendar"></i>
-				    	</div>
-					  </div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.css">
+		<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+		<link rel = "stylesheet"
+			type="text/css"
+			href="{% static 'app/form.css' %}" />
+		</head>
+		<div id="travelForm">
+			<form action="">
+				<input type="text" name="from_" placeholder="From">
+				<input name="from_date" id="from_date">
+				<input type="text" name="to" placeholder="To">
+				<input name="to_date" id="to_date">
+				<input type="submit" value="Submit">
+			</form>
+		</div>
+		<div id="loader">
+			<div class="spinner"></div>
+		</div>
+		<div  id="travelInfo">
+			<div id="travelTable">	</div>
+		</div>
+		<!-- holy fuck this script does everything -->
+		<!-- this schould eventually be moved to it's own .js file -->
+		<script type="text/javascript">
+			$("form").submit(function(event){
+				event.preventDefault();
+				var formData = $("form").serializeArray();
+				$("#loader").css("display", "inline");
+				$("#travelForm").css("display", "none");
+				$.post("/", formData, function(data)
+					{
+					
+					var json_data = JSON.parse(data);
+					var elements = json_data.length;
+						for (i = 0; i < elements; i++){
+						console.log(json_data[i]);
+						var connections = json_data[i].Connections;
+						var price = json_data[i].Price;
+						var emissions = json_data[i].Emissions;
+						$("#travelTable").after(
+							`<div class="card">
+			<div class="card-content">
+				<div class="media">
+					<div class="media-left">
+						<figure class="image is-48x48">
+							<img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+						</figure>
+					</div>
+					<div class="media-content">
+						<p class="title is-4">${emissions} tCO2 </p>
+						<p class="subtitle is-6"> £ ${price}</p>
 					</div>
 				</div>
-	   			<div class='col'>
-					<div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-					  	{{ form.inbound | as_crispy_field }}
-					  <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
-				    	<div class="input-group-text" style=""><i class="fa fa-calendar"></i>
-				    	</div>
-					  </div>
-					</div>
-				</div>
-	    	</div>    
-		    <div class="col text-center">
-		    	<button class="btn btn-success"type="submit">Get Flights</button>
-		    </div>
-	    </div>
-	 </form>
-<!-- 	 <script type="text/javascript">
-	 	function getPlaces() {
-	 		let element = event.target;
-	 		let query = element.value;
-	 		var xhttp = new XMLHttpRequest();
-	 		xhttp.onreadystatechange = function() {
-	 			if (this.readyState == 4 && this.status == 200){
-	 				alert(this.response);		
-	 			}
-	 		};
-	 		if (query.length >= 2){
-	 			xhttp.open("POST", "/places");
-	 			xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-	 			xhttp.send(query);
-	 		}
-	 	}
-	 </script> -->
-     <script>
-	  $(function () {
-	    $("#datetimepicker1").datetimepicker({
-	    	format: 'LT',
-	    });
-	  });
-	</script>
-	<script>
-	  $(function () {
-	    $("#datetimepicker2").datetimepicker({
-	    	format: 'LT',
-	    });
-	  });
-	</script>
-{% endblock %}
+				<div class="content"></div>
+			</div>
+		</div>`
+						);
+					}
+					$("#loader").css("display", "none");
+					$("#travelInfo").css("display", "inline");
+				})
+			});
+		</script>
+		<script type="text/javascript">
+			var date_formatting = { dateFormat: "Y-m-d" };
+				flatpickr("#from_date",	date_formatting );
+		</script>
+		<script type="text/javascript">
+			var date_formatting = { dateFormat: "Y-m-d" };
+				flatpickr("#to_date",	date_formatting );
+		</script>
+	{% endblock %}

@@ -1,0 +1,23 @@
+{
+  "name": "skysaver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "flatpickr": "^4.6.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hm352/skysaver.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hm352/skysaver/issues"
+  },
+  "homepage": "https://github.com/hm352/skysaver#readme"
+}

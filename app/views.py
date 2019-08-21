@@ -12,47 +12,15 @@ from .emissions import (
     count_stops
 )
 
-
+@csrf_exempt
 def form(request):
     if request.method == "GET":
-        form = FlightForm()
         return render(request, "app/form.html", {'form': form})
-
-
-@csrf_exempt
-def places(request):
-    query = request.body.decode()
-    places = get_places(query)["Places"]
-    place_list = [place["PlaceName"] for place in places]
-    if not place_list:
-        place_list = ["destination does not exist :("]
-    return HttpResponse(place_list)
-
-
-@csrf_exempt
-def test(request):
-    if request.method == "POST":
-        sleep(5)
-        print(request.body)
-        silly_json = {
-            "silly": "billy",
-            "billy": "silly"
-        }
-        return HttpResponse(json.dumps(silly_json))
     else:
-        return render(request, "app/test.html")
+        outbound_date = request.POST.get("from")
+        inbound_date = request.POST.get("to")
 
-
-def results(request):
-    if request.method == "GET":
-        return redirect("/")
-
-    else:
-        print(request.POST)
-        outbound = request.POST.get("outbound")
-        inbound = request.POST.get("inbound")
-
-        content = travel_options("2019-04-15", "2019-04-20")
+        content = travel_options("2019-09-15", "2019-09-20")
 
         itineraries = content["Itineraries"]
         legs = content["Legs"]
@@ -67,10 +35,14 @@ def results(request):
             itinerary["Emissions"] = emissions
             itinerary["Price"] = itinerary["PricingOptions"][0]["Price"]
             itinerary["Departure"] = out_leg["Departure"]
-        return render(
-            request,
-            "app/results.html",
-            context={
-                "itineraries": itineraries
-            }
-        )
+        return HttpResponse(json.dumps(itineraries))
+
+
+@csrf_exempt
+def places(request):
+    query = request.body.decode()
+    places = get_places(query)["Places"]
+    place_list = [place["PlaceName"] for place in places]
+    if not place_list:
+        place_list = ["destination does not exist :("]
+    return HttpResponse(place_list)

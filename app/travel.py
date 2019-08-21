@@ -1,9 +1,18 @@
+"""
+Request wrappers to the Skyscanner API
+"""
+
 import requests
 import json
 from time import sleep
 
 
 def create_session(outbound, inbound):
+    """
+        Creates session with Skyscanner API; sessions are polled for
+        real time flight information in a given date range.
+        create_session is called by travel_options.
+    """
     url = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/v1.0"
 
     headers = {
@@ -33,6 +42,10 @@ def create_session(outbound, inbound):
 
 
 def travel_options(outbound, inbound):
+    """
+        Retrieves all potential routes for a given
+        date range by polling a session 
+    """
     sessionkey = create_session(outbound, inbound)
     headers = {
         "X-RapidAPI-Host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
