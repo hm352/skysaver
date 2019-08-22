@@ -1,0 +1,36 @@
+@charset "utf-8";
+
+$dark-green: #1b7a43;
+$navbar-background-color: $dark_green;
+
+@import "/Users/henrymaher/workspace/skysaver/node_modules/bulma/bulma.sass";
+
+.card {
+ 	border-radius: 15px 50px 30px 5px;
+}
+
+ .card-footer, .card-header {
+ 	border-radius: 25px;
+ }
+
+p {
+	font-family: 'Inconsolata', monospace;
+	color: black;
+}
+
+#skysaver {
+	font-family: 'glasgow', cursive;
+	color: black;
+	padding-top: 14px;
+}
+.navbar-item, button {
+	font-family: 'Inconsolata', monospace;
+	color: black;
+	border-color: #326338;	
+}
+.form {
+	color: black;
+	display: flex;
+		align-items: center;
+		justify-content: center;
+}

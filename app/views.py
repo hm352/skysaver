@@ -17,10 +17,9 @@ def form(request):
     if request.method == "GET":
         return render(request, "app/form.html", {'form': form})
     else:
-        outbound_date = request.POST.get("from")
-        inbound_date = request.POST.get("to")
-
-        content = travel_options("2019-09-15", "2019-09-20")
+        data = request.POST
+        print(data, flush=True)
+        content = travel_options(data)
 
         itineraries = content["Itineraries"]
         legs = content["Legs"]
@@ -32,11 +31,15 @@ def form(request):
             itinerary["Connections"] = stops
             out_route = route_finder(out_leg, places)
             emissions = route_emissions(out_route)
-            itinerary["Emissions"] = emissions
-            itinerary["Price"] = itinerary["PricingOptions"][0]["Price"]
+            itinerary["Emissions"] = round(emissions, 0)
+            itinerary["Price"] = round(itinerary["PricingOptions"][0]["Price"], 0)
             itinerary["Departure"] = out_leg["Departure"]
         return HttpResponse(json.dumps(itineraries))
 
+
+@csrf_exempt
+def card(request):
+    return render(request, "app/test.html")
 
 @csrf_exempt
 def places(request):

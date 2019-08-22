@@ -7,7 +7,7 @@ import json
 from time import sleep
 
 
-def create_session(outbound, inbound):
+def create_session(data):
     """
         Creates session with Skyscanner API; sessions are polled for
         real time flight information in a given date range.
@@ -20,11 +20,15 @@ def create_session(outbound, inbound):
         "X-RapidAPI-Key": "d6a92afd29msh6816f4510a93926p15a997jsncef016cde055",
         "Content-Type": "application/x-www-form-urlencoded"
     }
+    outbound = data.get('from_date')
+    inbound = data.get('to_date')
+    adults = data.get("adults")
+    children = data.get("children")
 
     data = {
         "inboundDate": inbound,
-        "cabinClass": "business",
-        "children": 0,
+        "cabinClass": "economy",
+        "children": children,
         "infants": 0,
         "country": "UK",
         "currency": "GBP",
@@ -34,19 +38,18 @@ def create_session(outbound, inbound):
         "outboundDate": outbound,
         "adults": 1
     }
-
     response = requests.post(url, headers=headers, data=data)
     location = response.headers["Location"]
     sessionkey = location.split("/")[-1]
     return sessionkey
 
 
-def travel_options(outbound, inbound):
+def travel_options(data):
     """
         Retrieves all potential routes for a given
         date range by polling a session 
     """
-    sessionkey = create_session(outbound, inbound)
+    sessionkey = create_session(data)
     headers = {
         "X-RapidAPI-Host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
         "X-RapidAPI-Key": "d6a92afd29msh6816f4510a93926p15a997jsncef016cde055",

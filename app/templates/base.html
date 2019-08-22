@@ -1,29 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html class="has-navbar-fixed-top">
+{% load static %}
 <head>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">
+	<link href="https://fonts.googleapis.com/css?family=Inconsolata&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'app/base.css' %}">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+<style type="text/css">
+	@font-face {
+		font-family: glasgow;
+		src: url(static/app/fonts/glasgow/StrongGlasgowRegular-ypAZ.ttf);
+	}
+</style>
 <body>
-	<nav class="navbar">
+	<nav class="navbar is-fixed-top">
 		<div class="navbar-brand">
-			    <a class="navbar-item" href="https://bulma.io">
-      				<img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+			    <a class="navbar-item">
+      				<img src="{% static 'app/images/aeroplane.png' %}" width="30" height="30">
     			</a>
-    			<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+    			<p id="skysaver"> SkySaver </p>
+    			<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="menu" onclick="isActive()">
       				<span aria-hidden="true"></span>
       				<span aria-hidden="true"></span>
       				<span aria-hidden="true"></span>
     			</a>
 		</div>
-		<div id="navbarBasicExample" class="navbar-menu">
+		<div id="menu" class="navbar-menu">
 			<div class="navbar-start">
 				<a class="navbar-item">
-					about project
+					About Project
 				</a>
 				<a class="navbar-item">
 					Home
 				</a>
+			</div>
+			<div class="navbar-end">
 			</div>
 		</div>
 	</nav>
@@ -31,5 +47,9 @@
 		{% block content %}
 		{% endblock %}
 	</div>
+<script type="text/javascript">
+	function isActive() {
+		$("#menu").toggleClass("is-active");	}
+</script>
 </body>
 </html>
